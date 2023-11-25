@@ -1,35 +1,47 @@
-#include<bits/stdc++.h>
+#include<iostream>
+#include<cmath>
 using namespace std;
-int alphacount[50];
-char word[200];
-bool isprime(int x)
-{
-	if(x<2)
-	    return 0;
-	for(int i=2;i<=sqrt(x);i++)
-	{
-		if(x%i==0)
-		    return 0;
-	}
-	return 1;
-}
+int n;
+int a[205], b[205];
+int m[205][205][205];
+int c[205][205];
 int main()
 {
-	int maxn=0,minn=100;
-	cin>>word;
-	for(int i=0;i<strlen(word);i++)
-		alphacount[word[i]-'a']++;
-	for(int i=0;i<'z'-'a';i++)
+	cin >> n;
+	for (int i = 0; i < n; i++)
 	{
-		if(alphacount[i]>maxn)
-			maxn=alphacount[i];
-		if(alphacount[i]<minn)
-			minn=alphacount[i];
+		cin >> a[i] >> b[i];
+		for (int j = 0; j < a[i]; j++)
+		{
+			for (int k = 0; k < b[i]; k++)
+			{
+				cin >> m[i][j][k];
+			}
+		}
 	}
-	minn++;
-	if(isprime(maxn-minn))
-		cout<<"Lucky Word\n"<<maxn-minn<<endl;
-	else
-	    cout<<"No Answer\n0\n";
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < a[i]; j++)
+		{
+			for (int k = 0; k < b[i]; k++)
+			{
+				bool jc = true;
+				for (int i2 = 3; i2 < sqrt(m[i][j][k]); i2+=2)
+				{
+					if (m[i][j][k] % i2 == 0)
+					{
+						cout<<0<<" ";
+						break;
+					}
+				}
+				if(jc)
+				{
+					cout<<1<<" ";
+				}
+			}
+			cout<<endl;
+		}
+		
+	}
 	return 0;
 }
