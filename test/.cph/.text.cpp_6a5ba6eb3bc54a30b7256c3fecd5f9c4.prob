@@ -1,0 +1,1 @@
+{"name":"Local: text","url":"d:\\PuMochen\\C\\vscode\\text\\text.cpp","tests":[{"id":1670675286975,"input":"5 1 0\n3 3","output":"12"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\PuMochen\\C\\vscode\\text\\text.cpp","group":"local","local":true}

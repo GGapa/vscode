@@ -1,0 +1,1 @@
+{"name":"Local: P1056","url":"d:\\PuMochen\\C\\vscode\\program\\2023\\08\\202308012\\P1056.cpp","tests":[{"id":1691811983116,"input":"4 5 1 2 3\n4 2 4 3\n2 3 3 3\n2 5 2 4","output":"2\n2 4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\PuMochen\\C\\vscode\\program\\2023\\08\\202308012\\P1056.cpp","group":"local","local":true}

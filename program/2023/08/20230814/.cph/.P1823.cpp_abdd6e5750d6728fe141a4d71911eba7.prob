@@ -1,0 +1,1 @@
+{"name":"Local: P1823","url":"d:\\PuMochen\\C\\vscode\\program\\2023\\08\\20230814\\P1823.cpp","tests":[{"id":1692028814273,"input":"7 \n2 \n4 \n1 \n2 \n2 \n5 \n1","output":"10"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\PuMochen\\C\\vscode\\program\\2023\\08\\20230814\\P1823.cpp","group":"local","local":true}

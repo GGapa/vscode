@@ -1,0 +1,1 @@
+{"name":"Local: P1939","url":"d:\\PuMochen\\C\\vscode\\program\\2023\\08\\20230821\\P1939.cpp","tests":[{"id":1692617053819,"input":"3\n6\n8\n10","output":"4\n9\n19"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\PuMochen\\C\\vscode\\program\\2023\\08\\20230821\\P1939.cpp","group":"local","local":true}

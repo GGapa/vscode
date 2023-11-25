@@ -1,0 +1,1 @@
+{"name":"Local: P9583","url":"e:\\PuMochen\\C\\vscode\\program\\2023\\09\\20230904\\P9583.cpp","tests":[{"id":1693839100049,"input":"3 4 5 3\n1 3\n2 4\n1 2\n1 3\n2 2","output":"8"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\PuMochen\\C\\vscode\\program\\2023\\09\\20230904\\P9583.cpp","group":"local","local":true}
