@@ -1,0 +1,1 @@
+{"name":"Local: c","url":"d:\\Forever1507\\1.23hdq\\c\\c.cpp","tests":[{"id":1705983805238,"input":"2 3 3\n0 3\n1 2\n2 1","output":"0\n9\n9"},{"id":1705983953567,"input":"6 7 2\n1 2 0 3 0 1\n1 1 1 2 2 0","output":"825297686\n559099197"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Forever1507\\1.23hdq\\c\\c.cpp","group":"local","local":true}

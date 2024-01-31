@@ -1,0 +1,2 @@
+﻿放大的X.obj : error LNK2005: _main 已经在 P1228 地毯填补问题.obj 中定义
+D:\8.4蒲莫臣\C\作业和\Debug\作业.exe : fatal error LNK1169: 找到一个或多个多重定义的符号

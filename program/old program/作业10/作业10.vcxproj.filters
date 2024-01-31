@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="画等腰梯形.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P8072 [COCI2009-2010 7] COKOLADA.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P7797 [COCI2015-2016 6] BELA.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P8301 [CoE R4 A Stoi2041] 娘子.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P7066 [NWRRC2014]Grave.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P7042 「MCOI-03」正方.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P2404 自然数的拆分问题.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P8219 [WFOI - 02] I wanna a feasitor（化验器）.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P6529 [COCI2015-2016] KARTE.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P8295 [COCI2012-2013 2] MORTADELA.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1830 轰炸III.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P6723 [COCI2015-20165] ZAMKA.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P6723 [COCI2015-2016 5] ZAMKA.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P7189 [COCI2007-2008NO.6] PARKING.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P3131 [USACO16JAN]Subsequences Summing to Sevens S.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P3156 【深基15.例1】询问学号.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1449 后缀表达式.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P5690 [CSP-S2019 江西] 日期.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P3613 【深基15.例2】寄包柜.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1996 约瑟夫问题.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="pgxggl%40foxmail.com.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P7072 [CSP-J2020] 直播获奖.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1540 [NOIP2010 提高组] 机器翻译.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P2058 [NOIP2016 普及组] 海港.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P1241 括号序列.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="P4715 【深基16.例1】淘汰赛.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="P3156 【深基15.例1】询问学号" />
+    <None Include="P3613 【深基15.例2】寄包柜" />
+  </ItemGroup>
+</Project>
