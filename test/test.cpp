@@ -1,43 +1,19 @@
+// USACO 2016 Open B. Diamond Collector
 #include <bits/stdc++.h>
 using namespace std;
-const int maxn = 1000 + 5; 
-
-
-int n, k;
-int dp[maxn][maxn];
-
-struct Node {
-	int x, y;
-}a[maxn];
-
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	cout.tie(0);
-	cin >> n >> k;
-	for(int i = 1; i <= n; i++)  
-		cin >> a[i].x >> a[i].y;
-
-	sort(a + 1, a + 1 + n, [](const Node& x, const Node &y) {
-        if(x.x == y.x) return x.y < y.y;
-	    return x.x < y.x;
-    });
-	
-	int ans = 0;
-	for(int i = 1; i <= n; i++) {
-		dp[i][k] = 1;
-		for(int j = 0; j <= k; j++) {
-			for(int q = 1; q < i; q++) {
-				if(a[q].x > a[i].x || a[q].y > a[i].y) continue;
-				int dx = abs(a[i].x - a[q].x);
-				int dy = abs(a[i].y - a[q].y);
-				int d = dx + dy - 1;
-				if(j + d > k) continue;
-                dp[i][j] = max(dp[i][j], dp[q][j + d] + d + 1);
-				ans = max(ans, dp[i][j] + j);
-			}
-		}
-	}
-	cout << ans << endl;
-	return 0;
+ ios::sync_with_stdio(false), cin.tie(0);
+ int n, k;
+ cin >> n >> k; // 钻石的数量 n 和最大尺寸差 k
+ vector<int> A(n);
+ for (int &a : A) cin >> a;
+ sort(A.begin(), A.end()); // 对钻石尺寸进行排序
+ int ans = 0; // 初始化最大展示钻石数量为 0
+ for (int i = 0; i < n; ++i) // 遍历每个钻石
+ for (int j = i + 1, cnt = 1; j < n && A[j] - A[i] <= k;
+ ++j) { // 从当前钻石的下一个位置开始，遍历后续的钻石
+ ans = max(ans, ++cnt); // 更新最大展示钻石数量为当前数量 cnt 的最大值
+ }
+ cout << ans;
+ return 0;
 }
