@@ -5,6 +5,7 @@
 using namespace std;
 typedef long long ll;
 const int N = 1e5 + 5;
+#define int long long
 
 int n, m;
 int a[N];
@@ -24,12 +25,12 @@ signed main() {
     cin >> n >> m;
     rep(i, 1, n) cin >> a[i];
     sort(a + 1, a + 1 + n);
-    int l = 1, r = 1e9;
-    while(l < r) {
+    int l = 1, r = INT_MAX, ans = 0;
+    while(l <= r) {
         int mid = l + r >> 1;
-        if(check(mid)) l = mid + 1;
-        else r = mid ;
+        if(check(mid)) l = mid + 1, ans = max(ans, mid);
+        else r = mid - 1;
     }
-    cout << l << '\n';
+    cout << ans << '\n';
     return 0;
 }
