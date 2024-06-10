@@ -1,28 +1,42 @@
 #include <bits/stdc++.h>
-#define rep(i, a, b) for (int i = (a), stOwxc = (b); i <= stOwxc; i++)
-#define per(i, a, b) for (int i = (a), stOwxc = (b); i >= stOwxc; i--)
-using namespace std;
-typedef long long ll;
-using VI = vector<int>;
-const int N = 3e5 + 5;
-
-
-    ll n, ans;
-    ll a[N], s[N];
-    int main()
-    {
-        n = read();
-        for (int i = 1; i <= n; i++)
-            a[i] = read();
-        sort(a + 1, a + n + 1);
-        for (int i = 1; i <= n; i++)
-            s[i] = s[i - 1] + a[i];
-        for (int i = 2; i <= n; i++)
-        {
-            ll t = upper_bound(a + 1, a + i, mod - a[i] - 1) - (a + 1);
-            ans += s[i - 1] + (i - 1) * a[i] - (i - t - 1) * mod;
+using i64 = long long;
+constexpr int Log = 18;
+int main() {
+    int q;
+    std::cin >> q;
+    std::vector<int> a(q + 1), c(q + 1), dep(q + 1);
+    std::vector p(q + 1, std::vector<int>(Log + 1, -1));
+    std::cin >> a[0] >> c[0];
+    for (int i = 1; i <= q; i++) {
+        int op;
+        std::cin >> op;
+        if (op == 1) {
+            std::cin >> p[i][0];
+            dep[i] = dep[p[i][0]] + 1;
+            for (int j = 0; (1 << j) <= dep[i]; j++) {
+                p[i][j + 1] = p[p[i][j]][j];
+            }
+            std::cin >> a[i] >> c[i];
+        } else {
+            int v, w;
+            std::cin >> v >> w;
+            int sum = 0;
+            i64 cost = 0;
+            while (w && a[v]) {
+                int u = v;
+                for (int j = Log; j >= 0; j--) {
+                    if (p[u][j] != -1 && a[p[u][j]]) {
+                        u = p[u][j];
+                    }
+                }
+                int t = std::min(w, a[u]);
+                sum += t;
+                cost += i64(t) * c[u];
+                a[u] -= t;
+                w -= t;
+            }
+            std::cout << sum << " " << cost << std::endl;
         }
-        write(ans);
-        return 0;
     }
     return 0;
+}
