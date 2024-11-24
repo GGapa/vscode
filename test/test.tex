@@ -1,0 +1,159 @@
+% LAB2 %
+\documentclass[a4,10pt]{article}
+
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage[top=20mm,bottom=20mm,left=20mm,right=20mm]{geometry}
+
+\graphicspath{{figures/}}
+
+\pagestyle{plain}
+
+\begin{document}
+
+% 标题区域开始
+\begin{center}
+
+\zihao{2}四川大学实验报告 \\
+\vspace{1em}
+
+\begin{tabular}{lll}
+\zihao{4}学\hspace{1em}号\hspace{1em}N/A\hspace{1em} & \zihao{4}姓\hspace{1em}名\hspace{1em}辛明卿\hspace{1em}
+
+\zihao{4}专\hspace{1em}业\hspace{1em}计算机\hspace{1em} & \zihao{4}班\hspace{1em}级\hspace{1em}XXX\hspace{1em}
+\end{tabular}
+    
+\hrulefill
+
+\begin{tabular}{lll}
+\zihao{4}课程名称：\hspace{1em}Spatial Data Analysis\hspace{1em} & \zihao{4}实验课时：\hspace{1em}1\hspace{1em} \\
+
+\zihao{4}实验项目：\hspace{1em}R Tutorial\hspace{1em} & \zihao{4}实验时间：\hspace{1em}2H\hspace{1em}
+\end{tabular}
+
+\end{center}
+% 标题区域结束
+
+\section{实验目的}
+\large{} 
+\begin{enumerate}
+\item To learn to use R.
+\item To learn how to analyse a data set.
+\end{enumerate}
+
+\section{实验环境}
+\begin{enumerate}
+\item Operating System : Windows 10 x64 22H2
+\item Using Software : R 4.4.1 and RStudio 2024.04.2 Build 764
+\end{enumerate}
+
+\section{实验内容（算法、程序、步骤和方法）}
+\begin{center}
+\textbf{Assignment I} \\
+Include the plots of kernel estimation with $\sigma = 0.05$ and $\sigma = 0.1$.
+\end{center}
+\begin{enumerate}
+\item Add the data set: data(japanesepines).
+\item Set another name: jp = japanesepines.
+\item Use density.ppp() function to generate the intensity using
+the isotropic Gaussian kernel : \newline
+jp.Z.05 = density.ppp(jp, 0.05) \newline
+jp.Z.1 = density.ppp(jp, 0.1)
+
+\item Then, start plot : \newline
+par(mar=c(0,0,1,1)) \newline
+tl.05 = expression(paste("Kernel Estimation of JP: ", sigma, " = 0.05")) \newline
+tl.1 = expression(paste("Kernel Estimation of JP: ", sigma, " = 0.1")) \newline
+
+plot(jp.Z.1, main=tl.1) \newline
+points(jp,pch="+",col="6") \newline
+plot(jp.Z.05, main="Kernel Estimation of JP: sigma = 0.05") \newline
+points(jp,pch="+",col="6") \newline
+
+\begin{figure}[htbp]
+\subfigure[sigma = 0.05]{
+\includegraphics[scale=0.25]{assignment1_sigma=0.05.png} \label{1}
+}
+\quad
+\subfigure[sigma = 0.05 with points]{
+\includegraphics[scale=0.25]{assignment1_sigma=0.05_2.png} \label{2} 
+}
+\quad
+\subfigure[sigma = 0.1]{
+\includegraphics[scale=0.25]{assignment1_sigma=0.1_1.png}\label{3}
+}
+\quad
+\subfigure[sigma = 0.1 with points]{
+\includegraphics[scale=0.25]{assignment1_sigma=0.1_2.png}\label{4}
+}
+\caption{Experimental results of the authors}
+\end{figure}
+
+\end{enumerate}
+\begin{center}
+\textbf{Assignment II} \\
+Create plots like Figure 1 and Figure 2 without specifying xlim argument (Plot function will use recommended range which is specified in the ppp object). Include plots in your report.
+\end{center}
+\begin{enumerate}
+\item First, let’s plot G and F estimates diagrams : jp.ghat = Gest(jp) \newline
+\item Define max value : g.max = max(jp.ghat\$r) \newline
+\item Then, plot G estimates without xlim : plot(jp.ghat,cbind(rs,theo)\~r, main="G Estimates", xlab="r", ylab="G(r)")
+
+\begin{figure}[htbp]
+\includegraphics[scale=0.25]{assignment2_plot1.png}
+\caption{Ghat Plot}
+\label{2}
+\end{figure} 
+
+\item And then for F estimates :
+
+\begin{figure}[htbp]
+\includegraphics[scale=0.25]{assignment2_plot2.png}
+\caption{Fhat Plot}
+\label{3}
+\end{figure} 
+
+\item To plot K function diagram, we will need to use Kest() function : \newline
+jp.khat = Kest(jp) \newline
+plot(jp.khat, cbind(border, theo)~r, main="K function for JP data")
+
+\begin{figure}[htbp]
+\includegraphics[scale=0.25]{assignment2_plot3.png}
+\caption{Khat Plot}
+\label{4}
+\end{figure} 
+
+\item Similarly for L function diagram : 
+\begin{figure}[htbp]
+\includegraphics[scale=0.25]{assignment2_plot4.png}
+\caption{Lhat Plot}
+\label{5}
+\end{figure} 
+
+\item From the curve of the plot, easy to find out Ghat is clustered, Fhat and Khat are regular, Lhat is random. 
+\end{enumerate}
+\begin{center}
+\textbf{Assignment III} \\
+Create a plot for Ghat and Fhat with simulating bounds for Japanese pine sapling and provide it in your report.
+\end{center}
+\begin{enumerate}
+\item First, simulate the homogeneous spatial Poisson (CSR) point processes : \newline
+jp.r1 = runifpoint(jp\$n)
+\item Then, 
+
+\end{enumerate}
+
+\section{数据记录与计算}
+这里写你用到的数据
+
+\section{结论（结果）}
+描述实验结果
+
+\section{小结}
+这里写你的小结
+
+\section{指导老师评议}
+指导老师评议
+
+\end{document} 
