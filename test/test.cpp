@@ -45,15 +45,15 @@ using Math::C;
 using namespace Math::pre;
 
 struct Mat {
-    int n; 
-    LL A[2][2];
+    static constexpr int n = 1; 
+    LL A[n + 1][n + 1];
 
     LL* operator [](int i)  {return A[i];} 
     const LL* operator [](int i) const { return A[i]; } //在矩阵乘法中放入这两个函数之后，便可以直接通过 `ans[1][5]` 访问数组元素，而不是 `ans.a[1][5]`。
 
-    Mat(int _n = 1) : n(_n) {A[0][0] = A[0][1] = A[1][0] = A[1][1] = 0;}
+    Mat() {memset(A, 0, sizeof(A)); }
     const Mat operator*(const Mat &B) const {
-        Mat C(n);
+        Mat C;
         rep(i, 0, n) rep(j, 0, n) 
             rep(k, 0, n) (C[i][j] += (A[i][k] * B[k][j]) % mod) %= mod;
         return C;
@@ -77,7 +77,7 @@ namespace SGT {
     }tr[N << 2];
 
     Node operator+(const Node &x, const Node &y) {
-        Node ret; ret.mat.assign(3, Mat(1));
+        Node ret; ret.mat.assign(3, Mat());
         rep(i, 0, 2) ret.mat[i] = x.mat[i] * y.mat[i];
         return ret;
     }
@@ -98,7 +98,7 @@ namespace SGT {
     void build(int x = 1, int l = 1, int r = n) {
         if(l == r) {
             tr[x].tag = 0;
-            tr[x].mat.assign(3, Mat(1));
+            tr[x].mat.assign(3, Mat());
             rep(i, 0, 2) tr[x].mat[i] = mt[(i + A[l]) % 3][!(l & 1)];
             return ;
         }
@@ -137,7 +137,7 @@ uniform_int_distribution<int> rg(0, mod - 1);
 
 Mat getinv(const Mat &x) {
     LL a = x[0][0], b = x[1][0], c = x[1][1];
-    Mat ret(1);
+    Mat ret;
     ret[0][0] = inv(a);
     ret[1][0] = mod - (b * inv(a * c % mod) % mod); ret[1][1] = inv(c);
     return ret;
