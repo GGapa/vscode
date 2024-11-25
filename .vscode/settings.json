@@ -34,6 +34,7 @@
         "regex": "cpp",
         "tuple": "cpp",
         "new": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "deque": "cpp"
     }
 }

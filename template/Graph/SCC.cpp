@@ -13,7 +13,7 @@ struct SCC {
             if(!dfn[to]) 
                 low[x] = min(low[x], dfs(to));
             else if(!belong[to])
-                low[x] = min(low[x], low[to]);
+                low[x] = min(low[x], dfn[to]);
         }
         if(low[x] == dfn[x]) {
             cnt++;
@@ -21,6 +21,5 @@ struct SCC {
                 i = stk.back(), belong[i] = cnt;
         }
         return low[x];
- 
     }
 };
