@@ -2,63 +2,167 @@
 #define rep(i, a, b) for(int i = (a), stOwxc = (b); i <= stOwxc; i++)
 #define per(i, a, b) for(int i = (a), stOwxc = (b); i >= stOwxc; i--)
 using namespace std;
-using ll = long long ;
-using VI = vector<ll>;
+using LL = long long;
+using VI = vector<int>;
 
-struct SCC {
-    int n, idx, cnt;
-    vector<VI> G;
-    VI dfn, low, belong, stk;
-    SCC(int _n) : n(_n), G(n + 1), dfn(n + 1), belong(n +1), low(n + 1) {
-        idx = cnt = 0;
+constexpr int mod = 998244853, N = 250e3;
+
+namespace Math {
+    namespace pre {
+        template <typename T>
+        constexpr T qpow(T x, int y){
+            T ret = 1;
+            for(; y; y >>= 1) {
+                if(y & 1) (ret = ret * x) %= mod;
+                (x = x * x) %= mod;
+            }
+            return ret;
+        }
+
+        template <typename T>
+        constexpr T inv(T x) {return qpow(x, mod - 2); }
+    }  	
+    using namespace pre;
+
+    constexpr LL add(const LL x, const LL y) {return (x + y + mod) % mod; }
+    constexpr LL mul(const LL x, const LL y) {return (x * y % mod + mod) % mod; }
+
+    LL fac[N], iv[N];
+
+    void init() {
+        fac[0] = 1;
+        rep(i, 1, N - 1) fac[i] = mul(fac[i - 1], i);
+        iv[N - 1] = inv(fac[N - 1]); 
+        per(i, N - 2, 0) iv[i] = mul(iv[i + 1], i + 1) ;
     }
-    void add(int u, int v) {G[u].push_back(v); }
-    ll dfs(int x) {
-        low[x] = dfn[x] = ++idx;
-        stk.push_back(x);
-        for(auto to : G[x]) {
-            if(!dfn[to]) low[x] = min(low[x], dfs(to));
-            else if(!belong[to]) low[x] = min(low[x], dfn[to]);
-        }
-        if(low[x] == dfn[x]) {
-            cnt++;
-            for(int i = -1; i != x; stk.pop_back())
-                belong[i = stk.back()] = cnt;
-        }
-        return low[x];
+
+    LL C(int y, int x) {
+        if(x < 0 || y < 0 || y - x < 0) return 0;
+        return mul(fac[y], mul(iv[x], iv[y - x])) ;
+    }   
+}
+using Math::C; 
+using namespace Math::pre;
+
+struct Mat {
+    static constexpr int n = 1; 
+    LL A[n + 1][n + 1];
+
+    LL* operator [](int i)  {return A[i];} 
+    const LL* operator [](int i) const { return A[i]; } //在矩阵乘法中放入这两个函数之后，便可以直接通过 `ans[1][5]` 访问数组元素，而不是 `ans.a[1][5]`。
+
+    Mat() {memset(A, 0, sizeof(A)); }
+    const Mat operator*(const Mat &B) const {
+        Mat C;
+        rep(i, 0, n) rep(j, 0, n) 
+            rep(k, 0, n) (C[i][j] += (A[i][k] * B[k][j]) % mod) %= mod;
+        return C;
+    }
+    bool check() {
+        return A[0][0] == A[1][1] && A[0][1] == A[1][0] && A[0][0] == 1 && A[0][1] == 0;
     }
 };
+
+int A[N];
+Mat mt[3][2];
+
+#define ls (x << 1)
+#define rs (x << 1 | 1)
+namespace SGT {
+    int n;
+
+    struct Node {
+        vector<Mat> mat;
+        int tag = 0;
+    }tr[N << 2];
+
+    Node operator+(const Node &x, const Node &y) {
+        Node ret; ret.mat.assign(3, Mat());
+        rep(i, 0, 2) ret.mat[i] = x.mat[i] * y.mat[i];
+        return ret;
+    }
+
+    void apply(int x, int v) {
+        rotate(tr[x].mat.begin(), tr[x].mat.begin() + v, tr[x].mat.end());
+        tr[x].tag += v;
+    }
+
+    void pushdown(int x) {
+        tr[x].tag %= 3;
+        if(tr[x].tag == 0) return ;
+        apply(ls, tr[x].tag);
+        apply(rs, tr[x].tag);
+        tr[x].tag = 0;
+    }
+
+    void build(int x = 1, int l = 1, int r = n) {
+        if(l == r) {
+            tr[x].tag = 0;
+            tr[x].mat.assign(3, Mat());
+            rep(i, 0, 2) tr[x].mat[i] = mt[(i + A[l]) % 3][!(l & 1)];
+            return ;
+        }
+        int mid = l + r >> 1;
+        build(ls, l, mid); build(rs, mid + 1, r);
+        tr[x] = tr[ls] + tr[rs];
+    }
+
+    void init(int nn) {n = nn; build(); }
+
+    void modify(int L, int R, int x = 1, int l = 1, int r = n) {
+        if(L <= l && r <= R) return apply(x, 1);
+        int mid = l + r >> 1;
+        pushdown(x);
+        if(L <= mid) modify(L, R, ls, l, mid);
+        if(mid < R) modify(L, R, rs, mid + 1, r);
+        tr[x] = tr[ls] + tr[rs];
+    }
+
+    Node query(int L, int R, int x = 1, int l = 1, int r = n) {
+        if(L <= l && r <= R) return tr[x];
+        int mid = l + r >> 1;
+        pushdown(x);
+        if(L <= mid && mid < R) return query(L, R, ls, l, mid) + query(L, R, rs, mid + 1, r);
+        if(L <= mid) return query(L, R, ls, l, mid);
+        if(mid < R) return query(L, R, rs, mid + 1, r);
+        assert(0);
+        return Node();
+    }
+}
+#undef ls
+#undef rs
+
+mt19937_64 rnd(chrono::system_clock::now().time_since_epoch().count());
+uniform_int_distribution<int> rg(0, mod - 1);
+
+Mat getinv(const Mat &x) {
+    LL a = x[0][0], b = x[1][0], c = x[1][1];
+    Mat ret;
+    ret[0][0] = inv(a);
+    ret[1][0] = mod - (b * inv(a * c % mod) % mod); ret[1][1] = inv(c);
+    return ret;
+}
+
+void gmat() {
+    rep(i, 0, 2) {
+        auto &t = mt[i][0];
+        t[0][0] = rg(rnd); 
+        t[1][0] = rg(rnd); t[1][1] = rg(rnd);
+        mt[i][1] = getinv(t);
+    }
+}
 
 signed main() {
     ios::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
-    int n, m; cin >> n >> m;
-    VI A(n + 1); SCC S(n);
+    gmat();
+    int n, q; cin >> n >> q;
     rep(i, 1, n) cin >> A[i];
-    for(int i = 1, u, v; i <= m; i++)   
-        cin >> u >> v, S.add(u, v);
-    rep(i, 1, n) if(!S.dfn[i]) S.dfs(i);
-    rep(i, 1, n) cerr << S.belong[i] << " \n"[i == n];
-    int cnt = S.cnt;
-    vector<set<int>> G(cnt + 1);
-    VI D(cnt + 1, -1), sum(cnt + 1);
-    rep(i, 1, n) {
-        int b = S.belong[i];
-        sum[b] += A[i];
-        for(auto to : S.G[i]) {
-            int bt = S.belong[to];
-            if(bt != b) G[b].insert(bt);
-        }
+    SGT::init(n);
+    for(int op, l, r; q--; ) {
+        cin >> op >> l >> r;
+        if(op == 1) SGT::modify(l, r);
+        else cout << (SGT::query(l, r).mat[0].check() ? "Yes" : "No") << '\n';
     }
-    ll ans = 0;
-    function<ll(int)> dfs1 = [&](int x) {
-        auto &d = D[x];
-        if(d != -1) return d;
-        d = sum[x];
-        for(auto to : G[x]) d = max(d, sum[x] + dfs1(to));
-        return d;
-    };
-    rep(i, 1, cnt) ans = max(ans, dfs1(i));
-    cout << ans << '\n';
     return 0;
 }

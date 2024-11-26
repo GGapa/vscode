@@ -15,21 +15,6 @@ static int A[N], dfn[N], low[N], bel[N], deg[N], dis[N], sum[N], iss[N];
 static int cnt, idx; 
 vector<int> stk;
 
-// int dfs(int x) {
-//     low[x] = dfn[x] = ++idx;
-//     stk.push_back(x);
-//     for(auto to : G[x]) {
-//         if(!dfn[to]) low[x] = min(low[x], dfs(to));
-//         else if(!belong[to]) low[x] = min(low[x], dfn[to]);
-//     }
-//     if(low[x] == dfn[x]) {
-//         cnt++;
-//         for(int i = -1; i != x; stk.pop_back())
-//             belong[i = stk.back()] = cnt;
-//     }
-//     return low[x];
-// }
-
 int dfs(int x) {
     dfn[x] = low[x] = ++idx;
     stk.emplace_back(x);
@@ -66,17 +51,14 @@ signed main() {
         dis[i] = sum[i];
     }
 
-    // cerr << q.size() << '\n';
     while(!q.empty()) {
         int x = q.front(); q.pop();
-        cerr << x << '\n';
         for(auto to : T[x]) {
             dis[to] = max(dis[to], dis[x] + sum[to]);
             deg[to]--;
             if(deg[to] == 0) q.push(to);
         }
     }
-    // rep(i, 1, n) cerr << dis[i] << " \n"[i == n];
     cout << *max_element(dis, dis + 1 + n) << '\n';
     return 0;
 }

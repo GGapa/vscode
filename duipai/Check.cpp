@@ -2,6 +2,7 @@
 using namespace std;
 int main()
 {
+    int cnt = 0;
     while (true) 
     {
         system("data.exe");
@@ -10,6 +11,7 @@ int main()
         if (system("fc std.out Wrong.out")) {
         	system("pause");
 		}
+        cerr << ++cnt << '\n';
     }
     return 0;
 }

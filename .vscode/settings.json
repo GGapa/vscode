@@ -35,6 +35,7 @@
         "tuple": "cpp",
         "new": "cpp",
         "iomanip": "cpp",
-        "deque": "cpp"
+        "deque": "cpp",
+        "cmath": "cpp"
     }
 }
