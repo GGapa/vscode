@@ -48,7 +48,6 @@ signed main() {
     int tp = (1 << min(n, 16)) - 1;
     rep(jj, 1, max(1, n - 15)) {
         rep(ss, 1, tp) {
-            // vector<int>(0).swap(pos);
             int it = 0;
             rep(i, 0, min(n, 16) - 1) if(ss >> i & 1) pos[it++] = i + 1 + jj;
             int res = 0, cnt = 0;
@@ -64,6 +63,3 @@ signed main() {
     cout << ans << '\n';
     return 0;
 }
-/*
-pjobbikkifzzaqmpozlfkyuafghgpjbbikizzampozilfkyuafghygpjbbikiozzampozalfkyuafghg
-*/
