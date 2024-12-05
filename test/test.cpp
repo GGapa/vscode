@@ -1,26 +1,102 @@
-#include <bits/stdc++.h>
-#define rep(i, a, b) for(int i = (a), stOwxc = (b); i <= stOwxc; i++)
-#define per(i, a, b) for(int i = (a), stOwxc = (b); i >= stOwxc; i--)
-using namespace std;
-using LL = long long;
-using VI = vector<int>;
-
-struct Node {
-	int mn, pos, mnpos;
-	Node(const int a = 0, const int b = 0, const int c = 0) {mn = a, pos = b, mnpos = c; }
-	bool operator<(const Node &x) const {return mn > x.mn || (mn == x.mn && pos > x.pos); }
-	bool operator>(const Node &x) const {return x < *this; }
-	bool operator==(const Node &x) const {return mn == x.mn && pos == x.pos && mnpos == x.mnpos; }
-};
-
-priority_queue<Node> q;
-
-signed main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	q.emplace(Node(0, 1));
-	q.emplace(Node(1, 1));
-	q.emplace(Node(1, 2));
-	q.top();
+#include <cstdio>
+void read(int &a)
+{
+	a = 0;
+	char c = getchar();
+	while (c < '0' || c > '9')
+	{
+		c = getchar();
+	}
+	while (c >= '0' && c <= '9')
+	{
+		a = (a << 1) + (a << 3) + (c ^ 48);
+		c = getchar();
+	}
+}
+int max(int a, int b)
+{
+	return a > b ? a : b;
+}
+const int Maxn = 100000;
+int n, ans;
+int fa[Maxn + 5];
+int head[Maxn + 5], arrive[Maxn << 1 | 5], nxt[Maxn << 1 | 5], tot;
+void add_edge(int from, int to)
+{
+	arrive[++tot] = to;
+	nxt[tot] = head[from];
+	head[from] = tot;
+}
+int deg[Maxn + 5];
+struct Operation
+{
+	int u, t;
+} op[Maxn << 2 | 5];
+int len;
+void work_dfs(int u, int t)
+{
+	op[++len].u = u;
+	op[len].t = t;
+	int last = t;
+	bool flag = 0;
+	if (last == ans)
+	{
+		last = ans - deg[u];
+		flag = 1;
+	}
+	for (int i = head[u]; i; i = nxt[i])
+	{
+		int v = arrive[i];
+		if (v == fa[u])
+		{
+			continue;
+		}
+		fa[v] = u;
+		if (flag)
+		{
+			op[++len].u = u;
+			op[len].t = last;
+			flag = 0;
+		}
+		work_dfs(v, ++last);
+		op[++len].u = u;
+		op[len].t = last;
+		if (last == ans)
+		{
+			last = ans - deg[u];
+			flag = 1;
+		}
+	}
+	if (flag)
+	{
+		last = ans;
+	}
+	if (u != 1 && last != t - 1)
+	{
+		op[++len].u = u;
+		op[len].t = t - 1;
+	}
+}
+int main()
+{
+	read(n);
+	for (int i = 1; i < n; i++)
+	{
+		int u, v;
+		read(u), read(v);
+		add_edge(u, v);
+		add_edge(v, u);
+		deg[u]++, deg[v]++;
+	}
+	for (int i = 1; i <= n; i++)
+	{
+		ans = max(ans, deg[i]);
+	}
+	work_dfs(1, 0);
+	printf("%d\n", len);
+	for (int i = 1; i <= len; i++)
+	{
+		printf("%d %d\n", op[i].u, op[i].t);
+	}
 	return 0;
 }
