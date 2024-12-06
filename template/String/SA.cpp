@@ -10,7 +10,7 @@ string s;
 int sa[N], rk[N], ork[N], buc[N], id[N];
 int n;
  
-void work() {
+void SA() {
     int m = 1 << 7, p = 0;
     rep(i, 1, n) buc[rk[i] = s[i]]++;
     rep(i, 1, m) buc[i] += buc[i - 1];
@@ -25,7 +25,6 @@ void work() {
         rep(i, 1, m) buc[i] += buc[i - 1];
         per(i, n, 1) sa[buc[rk[id[i]]]--] = id[i];
         rep(i ,1, n) rk[sa[i]] = ork[sa[i - 1]] == ork[sa[i]] && ork[sa[i - 1] + w] == ork[sa[i] + w] ? p : ++p;
-//      rep(i, 1, n) cout << sa[i] << " \n"[i == n]; 
         if(p == n) return ;
     }
 }
@@ -35,7 +34,7 @@ signed main() {
     cin.tie(0); cout.tie(0);
     cin >> s; 
     n = s.size(); s = " " + s;
-    work();
+    SA();
     rep(i, 1, n) cout << sa[i] << " \n"[i == n];
     return 0;
 }
