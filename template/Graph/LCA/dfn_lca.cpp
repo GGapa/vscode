@@ -1,10 +1,9 @@
-constexpr int N = 3e5 + 5;
- 
-vector<int> G[N];
 int n;
  
 namespace LCA {
-    constexpr int B = 20;
+    constexpr int N = 3e5 + 5, B = __lg(N) + 1;
+ 
+    vector<int> G[N];
     int dfn[N], mn[B][N];
  
     void dfs(int x, int pa) {

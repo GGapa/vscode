@@ -1,12 +1,23 @@
-vector<int> p;
-int vis[N], mn[N];
+namespace LS {
+    constexpr int N = 1e6 + 5;
+    int pri[N], phi[N], mi[N], mu[N];
+    bitset<N> vis;
 
-for(int i = 2; i < N; i++) {
-    if(!vis[i]) p.emplace_back(i), mn[i] = i;
-    for(auto pr : p) {
-        if(i * pr >= N) break;
-        vis[i * pr] = 1;
-        mn[i * pr] = pr;
-        if(i % pr == 0) break;
+    void init(){
+        mu[1] = 1;
+        rep(i, 2, N - 1) {
+            if(!vis[i]) pri[++pri[0]] = i, mi[i] = i, phi[i] = i - 1, mu[i] = -1;
+            for(int j = 1; j <= pri[0] && i * pri[j] < N; j++) {
+                int tt = i * pri[j];
+                vis[tt] = 1;
+                mi[tt] = pri[j];
+                if(i % pri[j] == 0) {
+                    phi[tt]  = phi[i] * pri[j];
+                    break;
+                }
+                else phi[tt] = phi[i] * phi[pri[j]];
+                mu[tt] = -mu[i];
+            }
+        }
     }
 }
