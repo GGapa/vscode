@@ -39,7 +39,11 @@
 *.json
 /Examination
 /tools
+<<<<<<< HEAD
 
 
 .vscode/
 .vscode/tasks.json
+=======
+*.bin
+>>>>>>> 24ee15e0237a1fea8c1873bc48b64bb2a502fd63

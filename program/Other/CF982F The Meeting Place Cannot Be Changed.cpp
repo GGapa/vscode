@@ -12,21 +12,23 @@ int vis[N], lim[N], dis[N], ans[N], nxt[N];
 vector<int> G[N], cyc;
 list<int> li;
 
-void dfs(int x, int tag) {
+void dfs(int x) {
     if(!cyc.empty() || lim[x]) return ;
     if(vis[x]) {
-        if(vis[x] == tag) {
+        if(vis[x] == 1) {
             while(li.size() && li.front() != x) li.pop_front();
             for(auto a : li) cyc.emplace_back(a);
         }
         return ;
     }
     li.emplace_back(x);
-    vis[x] = tag;
+    vis[x] = 1;
 
     for(auto to : G[x]) if(!lim[to]) 
-        dfs(to, tag);
+        dfs(to);
     if(li.size()) li.pop_back();
+
+    vis[x] = 2;
 }
 
 void find() {
@@ -35,7 +37,7 @@ void find() {
     rep(i, 1, n) if(!vis[i]) {
         if(cyc.size()) break;
         li.clear();
-        dfs(i, i);
+        dfs(i);
     }
 }
 
@@ -70,10 +72,9 @@ signed main() {
     cin >> n >> m;
     for(int i = 1, u, v; i <= m; i++) 
         cin >> u >> v, G[u].emplace_back(v);
+        
     find();
     m = cyc.size();
-    cerr << m << '\n';
-    for(auto a : cyc) cerr << a << '\n';
     memset(dis, -1, sizeof(dis));
     rep(i, 0, m - 1) dis[cyc[i]] = i, nxt[cyc[i]] = cyc[(i + 1) % m];
 
@@ -100,9 +101,3 @@ signed main() {
     else cout << nw << '\n';
     return 0;
 }
-/*
-1 2
-2 3
-2 3
-2 1
-*/
