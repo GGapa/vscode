@@ -1,1 +1,0 @@
-{"name":"Local: 2","url":"e:\\PuMochen\\C\\vscode\\program\\2023\\09\\20230930\\2.cpp","tests":[{"id":1696038583269,"input":"7 3\nabbcada\n1 1 5\n2 1 b\n1 1 5","output":"1\n3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\PuMochen\\C\\vscode\\program\\2023\\09\\20230930\\2.cpp","group":"local","local":true}

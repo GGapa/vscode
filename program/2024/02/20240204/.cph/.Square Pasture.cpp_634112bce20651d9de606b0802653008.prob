@@ -1,1 +1,0 @@
-{"name":"Local: Square Pasture","url":"f:\\PuMochen\\C\\vscode\\program\\2024\\02\\20240204\\Square Pasture.cpp","tests":[{"id":1707048724210,"input":"6 6 8 8\n1 8 4 9","output":"49"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\PuMochen\\C\\vscode\\program\\2024\\02\\20240204\\Square Pasture.cpp","group":"local","local":true}

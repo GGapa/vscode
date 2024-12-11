@@ -1,1 +1,0 @@
-{"name":"Local: P1544","url":"d:\\PuMochen\\C\\vscode\\program\\2023\\08\\20230818\\P1544.cpp","tests":[{"id":1692363733233,"input":"5 3\n7\n3 9\n8 1 0\n2 7 4 4\n4 5 2 6 5","output":"75"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\PuMochen\\C\\vscode\\program\\2023\\08\\20230818\\P1544.cpp","group":"local","local":true}

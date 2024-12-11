@@ -1,1 +1,0 @@
-{"name":"Local: B","url":"f:\\PuMochen\\C\\vscode\\program\\2024\\02\\20240203\\test\\B.cpp","tests":[{"id":1706965338946,"input":"2\n3 2\n3 4 5\n1\n5\n4 1\n4 6 5 6\n3","output":"Case #1:\n4\n3\nCase #2:\n4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\PuMochen\\C\\vscode\\program\\2024\\02\\20240203\\test\\B.cpp","group":"local","local":true}

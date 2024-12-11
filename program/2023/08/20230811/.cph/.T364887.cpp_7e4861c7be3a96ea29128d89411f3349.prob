@@ -1,1 +1,0 @@
-{"name":"Local: T364887","url":"d:\\PuMochen\\C\\vscode\\program\\2023\\08\\20230811\\T364887.cpp","tests":[{"id":1691754008015,"input":"5 6\n10 20 30 40 50\n10 20\n20 60\n30 60\n10 59\n10 58\n10 59","output":"2\n3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\PuMochen\\C\\vscode\\program\\2023\\08\\20230811\\T364887.cpp","group":"local","local":true}
