@@ -17,7 +17,7 @@ signed main() {
     for(int i = 1, u, v, w; i <= m; i++) 
         cin >> u >> v >> w, u--, v--, G[u].emplace_back(v, w), G[v].emplace_back(u, w) ;
     vector<int> sp(k + 1); 
-    rep(i, 0, k - 1) cin >> sp[i] ;
+    rep(i, 0, k - 1) cin >> sp[i], sp[i]--;
     int tp = (1 << k) - 1;
     vector<VI> F(tp + 1, VI(n + 1, INF));
     rep(i, 0, k - 1) F[1 << i][sp[i]] = 0;
@@ -36,10 +36,9 @@ signed main() {
             }
         }
     };
+    fill(F[0].begin(), F[0].end(), 0);
     rep(i, 1, tp) {
-        for(int j = (i - 1) & i; j; j = (j - 1) & i) {
-            // cout << bitset<10>(i) << " " << bitset<10>(j) << " " << bitset<10>(i ^ j) << '\n';
-            // cout << i << " " << j << " " << (i ^ j) << " " << i - j << '\n';
+        for(int j = i & i; j; j = (j - 1) & i) {
             rep(k, 0, n - 1) 
                 F[i][k] = min(F[i][k], F[j][k] + F[i ^ j][k]);
         }

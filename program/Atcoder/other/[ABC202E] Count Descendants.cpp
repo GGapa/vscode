@@ -28,6 +28,9 @@ signed main() {
     int q; cin >> q;
     for(int i = 1, x, y; i <= q; i++) {
         cin >> x >> y;
+        // cout << in[x] << " " << out[x] << '\n';
+        // for(auto i : dep[y]) cout << i << '\n';
+        // cout << '\n';
         cout << lower_bound(dep[y].begin(), dep[y].end(), out[x]) - lower_bound(dep[y].begin(), dep[y].end(), in[x]) << '\n';
     }
     return 0;
