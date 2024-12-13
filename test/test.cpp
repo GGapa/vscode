@@ -1,53 +1,37 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define rep(i, a, b) for(int i = (a), stOwxc = (b); i <= stOwxc; i++)
+#define per(i, a, b) for(int i = (a), stOwxc = (b); i >= stOwxc; i--)
 using namespace std;
-#define ll long long
-const ll inf=1e18;
-const int N=1010,M=2010;
-int n,m,lim;
-vector<int> anc[N];
-ll dis[N][N],f[N][N][13];
-int h[N],e[M],w[M],ne[M],idx;
-inline void dfs(int u,int p,ll d)
-{
-	dis[p][u]=d;
-	if(u!=p) anc[u].push_back(p);
-	for(int i=h[u];~i;i=ne[i]) dfs(e[i],p,d+w[i]);
+using LL = long long;
+using VI = vector<int>;
+
+namespace LS {
+    constexpr int N = 1e7 + 5;
+    int pri[N], phi[N], mi[N], mu[N], sum[N];
+    bitset<N> vis;
+
+    void init(){
+        mu[1] = 1;
+        rep(i, 2, N - 1) {
+            if(!vis[i]) pri[++pri[0]] = i, mi[i] = i, phi[i] = i - 1, mu[i] = -1;
+            for(int j = 1; j <= pri[0] && i * pri[j] < N; j++) {
+                int tt = i * pri[j];
+                vis[tt] = 1;
+                mi[tt] = pri[j];
+                if(i % pri[j] == 0) {
+                    phi[tt]  = phi[i] * pri[j];
+                    break;
+                }
+                else phi[tt] = phi[i] * phi[pri[j]];
+                mu[tt] = -mu[i];
+            }
+        }
+    }
 }
-inline void add(int a,int b,int c)
-{
-	e[idx]=b;w[idx]=c;ne[idx]=h[a];h[a]=idx++;
-}
-inline void dp(int u)
-{
-	anc[u].push_back(0);
-	for(int i=0;i<=lim;i++) for(auto v:anc[u]) f[u][v][i]=0;
-	for(int i=h[u];~i;i=ne[i]) dp(e[i]);
-	for(auto v:anc[u])
-		for(int j=0;j<=lim;j++)
-		{
-			ll mx=0;
-			for(int i=h[u];~i;i=ne[i]) 
-			{
-				ll cur=min(f[e[i]][v][j]+dis[v][u],j>0?f[e[i]][u][j-1]:inf);
-				f[u][v][j]+=w[i]+cur;mx=max(mx,cur-f[e[i]][v][j]);	
-			}
-			f[u][v][j]-=mx;
-		}
-}
-int main()
-{
-	memset(h,-1,sizeof h);
-	// memset(f,0x3f,sizeof f);
-	memset(dis,0x3f,sizeof dis);
-	scanf("%d%d",&n,&m);
-	for(int i=2;i<=n;i++)
-	{
-		int p,x;
-		scanf("%d%d",&p,&x);
-		add(p,i,x);
-	}
-	for(int i=1;i<=n;i++) dfs(i,i,0);
-	lim=min(m,__lg(n)+1);dp(1);
-	for(int i=1;i<=m;i++) printf("%lld\n",f[1][0][min(i,lim)]);
-	return 0;
+
+signed main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+    
+    return 0;
 }
