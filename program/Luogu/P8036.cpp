@@ -8,24 +8,19 @@ using VI = vector<int>;
 int mx = 0;
 
 namespace LS {
-    constexpr int N = 1e7 + 1e6 + 5;
-    int pri[N], phi[N], mi[N], mu[N], sum[N];
+    constexpr int N = 1e7 + 200;
+    int pri[N], sum[N];
     bitset<N> vis;
 
     void init(){
-        mu[1] = 1;
         rep(i, 2, N - 1) {
-            if(!vis[i]) pri[++pri[0]] = i, mi[i] = i, phi[i] = i - 1, mu[i] = -1;
+            if(!vis[i]) pri[++pri[0]] = i;
             for(int j = 1; j <= pri[0] && i * pri[j] < N; j++) {
                 int tt = i * pri[j];
                 vis[tt] = 1;
-                mi[tt] = pri[j];
                 if(i % pri[j] == 0) {
-                    phi[tt]  = phi[i] * pri[j];
                     break;
                 }
-                else phi[tt] = phi[i] * phi[pri[j]];
-                mu[tt] = -mu[i];
             }
         }
         rep(i, 2, N - 1) sum[i] = sum[i - 1] + !vis[i];
@@ -39,27 +34,29 @@ using LS::pri;
 using LS::sum;
 using LS::vis;
 
+bool btw(int x, int y, int z) {
+    if(x > y) swap(x, y);
+    return x <= z && z <= y;   
+}
+
 void solve() {
-    int k, l, m; cin >> k >> l >> m;
-    int L = 1, R = mx, res = -1;
-    if(l == 0) {
-        if(pri[mx + 1] - pri[mx] < k) return cout << -1 << '\n', void();
-        return cout << pri[mx] << '\n', void();
-    }
+    int k, l, m; cin >> k >> l >> m; 
+    auto calc = [&](int L, int R) {
+        int ret = 0;
+        rep(i, L, R) if(i <= m || !vis[i]) ret++;
+        return ret;
+    };
+    int L = 1, R = 4652357, res = -1;   
+    int cnt = calc(L, L + k - 1);
     while(L <= R) {
-        int mid = L + R >> 1;   
-        int t = pri[mid];
-        if(t <= m) L = mid + 1;
-        if(sum[t + k - 1] - sum[t - 1] > l) L = mid + 1;
-        else if(sum[t + k - 1] - sum[t - 1] < l) R = mid - 1;
-        else return cout << t << '\n', void();
+        int mid = L + R >> 1;
+        int t = calc(mid, mid + k - 1);
+        if(t == l) return cout << mid << '\n', void();
+        else if(btw(cnt, t, l)) R = mid - 1;
+        else L = mid + 1;
+        cnt = calc(L, L + k - 1);
     }
-    rep(i, 1, m) {
-        int cnt = 0;
-        rep(j, i, i + k - 1) if(j <= m || vis[j]) cnt++;
-        if(cnt == l) return cout << i << '\n', void();
-    }
-    cout << -1 << '\n';
+    cout << -1 << '\n', void();
 }
 
 signed main() {

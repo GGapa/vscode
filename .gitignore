@@ -36,8 +36,8 @@
 
 *.prob
 *.zip
-*.json
 *.bin
 /Examination
 /tools
 /.vscode
+/test
