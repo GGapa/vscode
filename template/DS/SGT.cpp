@@ -22,8 +22,8 @@ namespace SGT {
             return ;
         } 
         int mid = l + r >> 1;
-        if(L <= mid) modify(L, R, ls, l, mid);
-        if(mid < R) modify(L, R, rs, mid + 1, r);
+        if(L <= mid) modify(L, R, v, ls, l, mid);
+        if(mid < R) modify(L, R, v, rs, mid + 1, r);
         tr[x] = tr[ls] + tr[rs];
     }
     Node query(int L, int R, int x = 1, int l = 1, int r = n) {
