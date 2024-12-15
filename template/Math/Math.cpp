@@ -35,8 +35,10 @@ using binom::C;
 namespace catalan {
     constexpr int N = 1e6 + 5;
     LL iv[N], C[N];
-    iv[1] = 1;
-    rep(i, 2, N - 1) iv[i] = 1ll * (mod - mod / i) * iv[mod % i] % mod;
-    C[0] = C[1] = 1;
-    rep(i, 2, N - 2) C[i] = C[i - 1] * 2 * (2 * i - 1) % mod * iv[i + 1] % mod;
+    void init() {
+        iv[1] = 1;
+        rep(i, 2, N - 1) iv[i] = 1ll * (mod - mod / i) * iv[mod % i] % mod;
+        C[0] = C[1] = 1;
+        rep(i, 2, N - 2) C[i] = C[i - 1] * 2 * (2 * i - 1) % mod * iv[i + 1] % mod;
+    }
 }using catalan::C;
