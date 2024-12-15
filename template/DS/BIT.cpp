@@ -3,7 +3,7 @@ struct BIT {
     int n;
     vector<T> tr;
     void init(int nn) {
-        n = nn;
+        n = nn + 1;
         tr.assign(n + 5, T{});
     }
     BIT (int nn = 0) {
