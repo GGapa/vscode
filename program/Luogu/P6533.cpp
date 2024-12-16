@@ -64,14 +64,13 @@ signed main() {
     cin.tie(0); cout.tie(0);
     cin >> n >> c;
     vector<AI> A(n + 1);
-    // rep(i, 1, n) rep(j, 0, 1) cin >> A[i][j];
-    rep(j, 0, 1) rep(i, 1, n) cin >> A[i][j];
+    rep(j, 0, 1) rep(i, 1, n) cin >> A[i][j], A[i][j] %= mod;
     
     vector<int> app(n + 1, 1);
     int q; cin >> q;
     SGT::init(q);
     for(int i = 1, it, a, b; i <= q; i++) {
-        cin >> it >> a >> b;
+        cin >> it >> a >> b; a %= mod; b %= mod;
         if(app[it] != i) SGT::modify(app[it], i - 1, A[it]);
         A[it] = {a, b}; app[it] = i;
     }
