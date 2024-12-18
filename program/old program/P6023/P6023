@@ -1,0 +1,36 @@
+
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+int m,k;
+long long n;
+struct stru
+{
+    int p,q
+}ruel[100005];
+bool cmp(stru x,stru y)
+{
+    return x.p<y.p;
+}
+int main()
+{
+    scanf("%lld%d%d",&n,&m,&k);
+    for(int i = 1;i<=m;i++)
+    {
+        scanf("%d%d",&rule[i].p,&rule[i].q);
+    }
+    sort(ruel+1,ruel+1+m,cmp);
+    int num1,num2;
+    for(int i = 1;i<=n;i++)
+    {
+        for(int j = i;j<=m;j++)
+        {
+            if(rule[j].p!=rule[i].p)
+            {
+                break;
+            }
+            num1++;
+        }
+    }
+}

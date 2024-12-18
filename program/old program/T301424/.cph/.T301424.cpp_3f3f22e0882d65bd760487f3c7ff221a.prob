@@ -1,0 +1,1 @@
+{"name":"Local: T301424","url":"d:\\PuMochen\\C\\vscode\\program\\T301424\\T301424.cpp","tests":[{"id":1672467649731,"input":"10\n1\n2\n7\n8\n9\n10\n11\n935\n101\n2023","output":"1\n-1\n3\n-1\n4\n-1\n4\n10\n7\n11"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\PuMochen\\C\\vscode\\program\\T301424\\T301424.cpp","group":"local","local":true}

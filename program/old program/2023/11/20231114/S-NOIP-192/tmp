@@ -1,0 +1,47 @@
+int main() {
+        priority_queue<pair<int, int>, vector<pair<int ,int>>, greater<pair<int, int>>> q;
+        for(int i = 1; i <= m; i++) q.push(make_pair(a[i].l, i));
+        int cnt = 0;
+        while(!q.empty()) {
+            int it = q.top().second, val = q.top().first;
+            q.pop();
+            int A = find(a[it].u), B = find(a[it].v);
+            if(A == B) {
+                if(it >= n) {
+                    ans[it] = val + 1;
+                    continue;
+                }
+                else {
+                    cout << "NO\n";
+                    return 0;
+                }
+            }
+            else if(it >= n) {
+                if(val != a[it].r) {
+                    q.push(make_pair(val + 1, it));
+                    continue;
+                }
+                else {
+                    cout << "NO\n";
+                    return 0;
+                }
+            }
+            if(used[val]) {
+                if(val == a[it].r) {
+                    cout << "NO\n";
+                    return 0;
+                }
+                q.push(make_pair(val + 1, it));
+                continue;
+            }
+            used[val] = true;
+            cnt++;
+            fa[B] = A;
+            ans[it] = val;
+            if(cnt == n - 1) break;
+        }
+        while(!q.empty()) ans[q.top().second] = a[q.top().second].r, q.pop();
+        cout << "YES\n";
+        for(int i = 1; i <= m; i++) cout << ans[i] << " \n"[i == m];
+        return 0;
+    }
