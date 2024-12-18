@@ -10,7 +10,7 @@ using AI = array<int, 2>;
 
 constexpr int N = 1e5 + 5;
 
-gp_hash_table<int, int> mp[N];
+unordered_map<int, int> mp[N];
 LL ans = 0;
 
 struct DSU {
@@ -28,7 +28,7 @@ struct DSU {
     bool merge(int x, int y) {
         x = find(x), y = find(y);
         if(x == y) return false;
-        if(mp[x].size() < mp[y].size()) swap(mp[x], mp[y]);
+        if(mp[x].size() > mp[y].size()) swap(mp[x], mp[y]);
         for(auto p : mp[x]) {
             ans += 1ll * p.second * mp[y][p.first];
             mp[y][p.first] += p.second;
