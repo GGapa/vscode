@@ -19,10 +19,10 @@ void dfs(int x, int fa) {
         return A[x] < A[y];
     });
     for(auto to : G[x]) if(to !=  fa) 
-        if(A[to] > A[x]) R[x] |= R[to];
+        if(A[to] > A[x] && ((R[x] << 1) & L[to]).any()) R[x] |= R[to];
     reverse(G[x].begin(), G[x].end());
     for(auto to : G[x]) if(to != fa) 
-        if(A[to] < A[x]) L[x] |= L[to];
+        if(A[to] < A[x] && ((L[x] >> 1) & R[to]).any()) L[x] |= L[to];
 }
 
 signed main() {
