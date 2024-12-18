@@ -1,6 +1,6 @@
 namespace pre {
-    template <typename T>
-    constexpr T qpow(T x, int y){   // 因为使用了 template 所以进 qpow 的时候别忘记开 long long
+    template <typename T = LL>
+    constexpr T qpow(T x, LL y){   // 因为使用了 template 所以进 qpow 的时候别忘记开 long long
         T ret = 1;
         for(; y; y >>= 1) {
             if(y & 1) (ret = ret * x % mod);
@@ -9,7 +9,7 @@ namespace pre {
         return ret;
     }
 
-    template <typename T>
+    template <typename T = LL>
     constexpr T inv(T x) {return qpow(x, mod - 2); }
 }   
 using namespace pre;
@@ -27,7 +27,7 @@ namespace binom {
  
     LL C(int y, int x) {
         if(x < 0 || y < 0 || y - x < 0) return 0;
-        return fac[y] * iv[x] * iv[y - x];
+        return fac[y] * iv[x] % mod * iv[y - x] % mod;
     }   
 }
 using binom::C; 
