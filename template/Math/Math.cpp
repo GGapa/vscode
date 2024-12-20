@@ -1,7 +1,6 @@
 namespace pre {
-    template <typename T = LL>
-    constexpr T qpow(T x, LL y){   // 因为使用了 template 所以进 qpow 的时候别忘记开 long long
-        T ret = 1;
+    constexpr LL qpow(LL x, LL y){
+        LL ret = 1;
         for(; y; y >>= 1) {
             if(y & 1) (ret = ret * x % mod);
             (x = x * x % mod) ;
@@ -9,8 +8,7 @@ namespace pre {
         return ret;
     }
 
-    template <typename T = LL>
-    constexpr T inv(T x) {return qpow(x, mod - 2); }
+    constexpr LL inv(LL x) {return qpow(x, mod - 2); }
 }   
 using namespace pre;
 
