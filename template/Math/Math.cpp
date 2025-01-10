@@ -30,6 +30,22 @@ namespace binom {
 }
 using binom::C; 
 
+namespace pre {
+    template <typename T>
+    constexpr T qpow(T x, LL y){
+        T ret(1);
+        for(; y; y >>= 1) {
+            if(y & 1) (ret = ret * x );
+            (x = x * x  ) ;
+        }
+        return ret;
+    }
+
+    template <typename T>
+    constexpr T inv(T x) {return qpow(x, mod - 2); }
+}   
+using namespace pre;
+
 namespace catalan {
     constexpr int N = 1e6 + 5;
     LL iv[N], C[N];
