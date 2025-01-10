@@ -4,8 +4,8 @@
         "prefix": "tou",
         "body": [
             "#include <bits/stdc++.h>",
-            "#define rep(i, a, b) for(int i = (a), stOwxc = (b); i <= stOwxc; i++)",
-            "#define per(i, a, b) for(int i = (a), stOwxc = (b); i >= stOwxc; i--)",
+            "#define rep(i, a, b) for(int i = (a), stOwrh = (b); i <= stOwrh; i++)",
+            "#define per(i, a, b) for(int i = (a), stOwrh = (b); i >= stOwrh; i--)",
             "using namespace std;",
             "using LL = long long;",
             "using VI = vector<int>;",
@@ -24,8 +24,8 @@
         "prefix": "codeforces",
         "body": [
             "#include <bits/stdc++.h>",
-            "#define rep(i, a, b) for(int i = (a), stOwxc = (b); i <= stOwxc; i++)",
-            "#define per(i, a, b) for(int i = (a), stOwxc = (b); i >= stOwxc; i--)",
+            "#define rep(i, a, b) for(int i = (a), stOwrh = (b); i <= stOwrh; i++)",
+            "#define per(i, a, b) for(int i = (a), stOwrh = (b); i >= stOwrh; i--)",
             "using namespace std;",
             "using LL = long long;",
             "using VI = vector<int>;",
