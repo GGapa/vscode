@@ -1,40 +1,86 @@
 #include <bits/stdc++.h>
-using namespace std;
-const int N = 8e3 + 10, mod = 1e9 + 7;
-int n, m, T = 100;
 
-int dp[N][N], C[N][N];
-void add(int x) {
-    for (int i = T; i >= 1; i--) {
-        for (int j = x; j <= T; j++) {
-            for (int k = 1; k <= T; k++) {
-                if (i >= k && j >= k * x) (dp[i][j] += dp[i - k][j - k * x] * C[i][k] % mod) %= mod;
-            }
+
+const int N = 200005, V = 6400005, L = 18;
+
+int n, m, tms, o[N], ft[N], dep[N], dfn[N], st[L][N];
+std::vector<int> to[N], del[N];
+long long ans;
+
+inline int getLca(int u, int v);
+
+struct SegmentTree {
+    int tot, c[V], f[V], s[V], t[V], ls[V], rs[V], rt[N];
+
+    inline void pushUp(int u) {
+        f[u] = f[ls[u]] + f[rs[u]] - dep[getLca(t[ls[u]], s[rs[u]])];
+        s[u] = s[ls[u]] ? s[ls[u]] : s[rs[u]];
+        t[u] = t[rs[u]] ? t[rs[u]] : t[ls[u]];
+    }
+    inline int query(int u) { return f[u] - dep[getLca(s[u], t[u])]; }
+    void modify(int &u, int l, int r, int p, int x) {
+        if (!u) { u = ++tot; }
+        if (l == r) {
+            c[u] += x; f[u] = c[u] ? dep[p] : 0; s[u] = t[u] = c[u] ? p : 0;
+            return;
+        }
+        int mid = l + r >> 1;
+        if (dfn[p] <= mid) { modify(ls[u], l, mid, p, x); }
+        else { modify(rs[u], mid + 1, r, p, x); }
+        pushUp(u);
+    }
+    void merge(int &u, int v, int l, int r) {
+        if (!u || !v) { u |= v; return; }
+        if (l == r) {
+            std::cerr << f[u] << " " << f[v] << '\n';
+            c[u] += c[v]; f[u] |= f[v]; s[u] |= s[v]; t[u] |= t[v];
+            return;
+        }
+        int mid = l + r >> 1;
+        merge(ls[u], ls[v], l, mid); merge(rs[u], rs[v], mid + 1, r); pushUp(u);
+    }
+} smt;
+
+void build() {
+    for (int i = 1; i <= tms; i++) { o[i] = log(i) / log(2) + 1e-7; }
+    for (int i = 1; i <= o[tms]; i++) {
+        for (int j = 1, u, v; j + (1 << i) - 1 <= tms; j++) {
+            u = st[i - 1][j]; v = st[i - 1][j + (1 << i - 1)];
+            st[i][j] = dep[u] < dep[v] ? u : v;
         }
     }
 }
-void del(int x) {
-    for (int i = 1; i <= T; i++) {
-        for (int j = T; j >= x; j--) {
-            for (int k = T; k >= 1; k--) {
-                if (i >= k && j >= k * x) (dp[i][j] += mod - dp[i - k][j - k * x] * C[i][k] % mod) %= mod;
-            }
-        }
-    }
+inline int getLca(int u, int v) {
+    if (!u || !v) { return 0; } u = dfn[u]; v = dfn[v];
+    if (u > v) { std::swap(u, v); }
+    int d = o[v - u + 1]; u = st[d][u]; v = st[d][v - (1 << d) + 1];
+    return dep[u] < dep[v] ? u : v;
 }
+
+void dfs(int u, int fa) {
+    ft[u] = fa; dep[u] = dep[fa] + 1; st[0][++tms] = u; dfn[u] = tms;
+    for (auto v : to[u]) { if (v != fa) { dfs(v, u); st[0][++tms] = u; } }
+}
+void solve(int u) {
+    for (auto v : to[u]) { if (v != ft[u]) { solve(v); } }
+    for (auto v : del[u]) { smt.modify(smt.rt[u], 1, tms, v, -1); }
+    ans += smt.query(smt.rt[u]); smt.merge(smt.rt[ft[u]], smt.rt[u], 1, tms);
+}
+
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(0), cout.tie(0);
-    for (int i = 0; i <= T; i++) {
-        C[i][0] = 1;
-        for (int j = 1; j <= i; j++) C[i][j] = C[i - 1][j] + C[i - 1][j - 1];
+    scanf("%d%d", &n, &m);
+    for (int i = 2, u, v; i <= n; i++) {
+        scanf("%d%d", &u, &v);
+        to[u].push_back(v); to[v].push_back(u);
     }
-    dp[0][0] = 1;
-    add(2);
-    add(3);
-    cout << dp[3][7] << '\n';
-    del(3);
-    add(3);
-    cout << dp[3][7] << '\n';
+    dfs(1, 0); build();
+    for (int u, v, lca; m; m--) {
+        scanf("%d%d", &u, &v); lca = getLca(u, v);
+        smt.modify(smt.rt[u], 1, tms, u, 1); smt.modify(smt.rt[u], 1, tms, v, 1);
+        smt.modify(smt.rt[v], 1, tms, u, 1); smt.modify(smt.rt[v], 1, tms, v, 1);
+        del[lca].push_back(u); del[ft[lca]].push_back(u);
+        del[lca].push_back(v); del[ft[lca]].push_back(v);
+    }
+    solve(1); printf("%lld\n", ans >> 1);
     return 0;
 }
