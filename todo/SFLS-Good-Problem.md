@@ -1,6 +1,6 @@
-https://qoj.ac/problem/9798
+~~https://qoj.ac/problem/9798~~
 
-https://www.luogu.com.cn/problem/P8569
+~~https://www.luogu.com.cn/problem/P8569~~
 
 -------
 

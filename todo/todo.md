@@ -1,4 +1,4 @@
-[SFLS-Good-Problem](./SFLS-Good-Problem.md)
+~~[SFLS-Good-Problem](./SFLS-Good-Problem.md)~~
 
 ~~P5829 【模板】失配树~~
 
