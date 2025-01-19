@@ -8,12 +8,11 @@ using VI = vector<int>;
 signed main() {
     ios::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
-    for(int cnt = 0; ; ) {
-        system("data.exe");
-        system("baoli.exe");
-        system("user.exe");
-        if(system("fc data.out user.out")) exit(0);
-        cerr << ++cnt << '\n';
+    LL x; cin >> x;
+    LL sum = 1;
+    rep(i, 1, 10000000) {
+        sum *= i;
+        if(sum == x) return cout << i << '\n', 0;
     }
     return 0;
 }
