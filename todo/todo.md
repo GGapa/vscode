@@ -1,3 +1,9 @@
+归纳法证明结论训练。
+
+~~https://www.luogu.com.cn/problem/CF1290F~~
+
+~~https://pjudge.ac/contest/1078/problem/21727~~
+
 ~~[SFLS-Good-Problem](./SFLS-Good-Problem.md)~~
 
 ~~P5829 【模板】失配树~~
