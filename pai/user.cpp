@@ -1,72 +1,102 @@
 #include <bits/stdc++.h>
+// #include <bits/extc++.h>
 #define rep(i, a, b) for(int i = (a), stOwrh = (b); i <= stOwrh; i++)
 #define per(i, a, b) for(int i = (a), stOwrh = (b); i >= stOwrh; i--)
 using namespace std;
+// using namespace __gnu_pbds;
 using LL = long long;
 using VI = vector<int>;
+template<int siz>
+using AI = array<int, siz>;
 
-struct fenwick {
-    int n;
-    struct BIT {
-        int n;
-        vector<int> T;
-        BIT(int _n) : n(_n) ,T(_n + 5) {    };
-        int lowbit(int x) {return x & -x;}
-        void modify(int x, int v) {
-            for(x; x <= n; x += lowbit(x)) T[x] += v;
-        }
-        LL query(int x) {
-            LL res = 0;
-            for(; x > 0; x -= lowbit(x)) res += T[x];
-            return res;
-        }
-    };
-    BIT T1, T2;
-    fenwick(int _n) : n(_n), T1(n), T2(n) { }
-    void modif(int x, int v) { T1.modify(x, (x - 1) * v); T2.modify(x, v); }
-    LL quer(int y) { return T2.query(y) * y - T1.query(y); }
-    void modify(int l, int r, int v) { modif(l ,v); modif(r + 1, -v); }
-    LL query(int l, int r) { return quer(r) - quer(l - 1); }
-};
+constexpr int N = 1e5 + 5;
+
+int n, q, m;
+int h[N], t[N], dep[N], mn[N], cmn[N], val[N];
+int fa[N][__lg(N) + 1];
+vector<int> G[N], vec;
+
+void dfs(int x, int pa, int rt) {
+    // cerr << x << " " << pa << '\n';
+    val[x] = t[x] + (dep[x] = dep[pa] + 1); mn[x] = x;
+    vec.emplace_back(x);
+    fa[x][0] = pa;
+    // if(val[x] < val[cmn[rt]]) cmn[rt] = x;
+    for(auto to : G[x]) if(to != pa) {
+        dfs(to, x, rt);
+        // mn[x] = min(mn[x], mn[to]);
+        if(val[mn[to]] < val[mn[x]]) mn[x] = mn[to];
+        // if(x == 1) cerr << mn[x] << '\n';
+    }
+}
+
+int getanc(int x, int y) {
+    per(i, __lg(n), 0) if(fa[x][i] >= y) x = fa[x][i];
+    if(x > y) x = fa[x][0];
+    return x;
+}
 
 signed main() {
     freopen("data.in", "r", stdin);
     freopen("user.out", "w", stdout);
     ios::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
-    int n; cin >> n;
-    vector<int> L(n + 1), R(n + 1);
-    rep(i, 1, n) cin >> L[i] >> R[i];
     
-    int q; cin >> q;
-    vector<array<int, 2>> A(q + 1);
-    rep(i, 1, q) cin >> A[i][0], A[i][1] = i;
-    sort(A.begin() + 1, A.end());
-    fenwick tr(q + 10);
-    rep(i, 1, q) tr.modify(i, i, A[i][0]);
+    cin >> n >> q >> m;
+    rep(i, 1, n) cin >> h[i];
+    rep(i, 1, n) cin >> t[i];
+    val[0] = t[0] = INT_MAX;
 
-    rep(i, 1, n) {
-        int l = 1, r = q;
-        int ll = q + 1, rr = 0;
-        while(l <= r) {
-            int mid = l + r >> 1;
-            if(tr.query(mid, mid) >= L[i]) ll = mid, r = mid - 1;
-            else l = mid + 1;
-        }
-    
-        l = 1, r = q;
-        while(l <= r) {
-            int mid = l + r >> 1;
-            if(tr.query(mid, mid) <= R[i]) rr = mid, l = mid + 1;
-            else r = mid - 1;
-        }
-
-        if(ll > rr) continue;
-        tr.modify(ll, rr, 1);
+    for(int i = 1, j = 1; i <= n; i++) {
+        while(j <= n && h[i] - h[j] > m) j++;
+        if(i != j) G[j].emplace_back(i);
+        // cerr << i << " " << j << '\n';
     }
 
-    vector<int> ans(q + 1);
-    rep(i, 1, q)  ans[A[i][1]] = tr.query(i, i) ;
-    rep(i, 1, q)  cout << ans[i] << '\n';
+    rep(i, 1, n) if(!dep[i]) {
+        vector<int>().swap(vec);
+        dfs(i, i, i); 
+        sort(vec.begin(), vec.end());
+        vector<int> tmp(vec.size() + 1);
+        per(i, (int)vec.size() - 1, 0) {
+            tmp[i] = min(tmp[i + 1], vec[i]);
+            tmp[i] = (val[tmp[i + 1]] < val[vec[i]] ? tmp[i + 1] : vec[i]);
+        }
+        rep(i, 0, (int)vec.size() - 1) cmn[vec[i]] = tmp[i];
+    }
+    rep(j, 1, __lg(n)) rep(i, 1, n) fa[i][j] = fa[fa[i][j - 1]][j - 1];
+
+    vector<int> mm(n + 1, 0); 
+    rep(i, 1, n) mm[i] = t[mm[i - 1]] <= t[i] ? mm[i - 1] : i;
+
+    for(int x, y; q--; ) {
+        cin >> x >> y;
+        if(x <= y) {
+            cout << 1 - (x == y) << '\n';
+            continue;
+        }
+        int ans = 1 + t[mm[y]] + (y != mm[y]), ox = x;
+        ans = min(ans, t[y] + 1);
+        x = getanc(x, y);
+        if(x <= y) {
+            ans = min(ans, val[mn[x]] - dep[x] + 1 + (mn[x] < y));
+            ans = min(ans, dep[ox] - dep[x]);
+        }
+    
+        x = cmn[y], ox = x;
+        x = getanc(x, y);
+        if(x <= y) {
+            ans = min(ans, val[cmn[y]] - dep[x] + 1 + (cmn[y] < y));
+        }
+        
+        cout << ans << '\n';
+    }
+
     return 0;
 }
+/*
+4 1 2
+1 4 7 8
+0 7 2 1
+4 3
+*/
