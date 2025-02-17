@@ -21,3 +21,24 @@ struct Dijkstra {
         }
     }
 }dj1, dj2;
+
+constexpr LL INF = 1e18;
+vector<LL> dis(n + 1, INF);
+LL work(int st, int ed) {
+    using AI = array<LL, 2>;
+    priority_queue<AI, vector<AI>, greater<AI>> q;
+    fill(dis.begin(), dis.end(), INF);
+    dis[st] = 0; q.push({0, st});
+    while(!q.empty()) {
+        int x = q.top()[1], w = q.top()[0]; q.pop();
+        if(dis[x] < w) continue;
+        for(auto i : G[x]) {
+            auto [to, w] = i;
+            if(dis[to] > dis[x] + w) {
+                dis[to] = dis[x] + w;
+                q.push({dis[to], to});
+            }
+        }   
+    }
+    return dis[ed];
+}
