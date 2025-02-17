@@ -1,14 +1,17 @@
 {
     "Print to console": {
-        "scope": "cpp",
         "prefix": "tou",
         "body": [
             "#include <bits/stdc++.h>",
+            "// #include <bits/extc++.h>",
             "#define rep(i, a, b) for(int i = (a), stOwrh = (b); i <= stOwrh; i++)",
             "#define per(i, a, b) for(int i = (a), stOwrh = (b); i >= stOwrh; i--)",
             "using namespace std;",
+            "// using namespace __gnu_pbds;",
             "using LL = long long;",
             "using VI = vector<int>;",
+            "template<int siz>",
+            "using AI = array<int, siz>;",
             "",
             "signed main() {",
             "    ios::sync_with_stdio(0);",
@@ -20,18 +23,21 @@
         "description": "头文件"
     },
     "Print to console2": {
-        "scope": "cpp",
         "prefix": "codeforces",
         "body": [
             "#include <bits/stdc++.h>",
+            "// #include <bits/extc++.h>",
             "#define rep(i, a, b) for(int i = (a), stOwrh = (b); i <= stOwrh; i++)",
             "#define per(i, a, b) for(int i = (a), stOwrh = (b); i >= stOwrh; i--)",
             "using namespace std;",
+            "// using namespace __gnu_pbds;",
             "using LL = long long;",
             "using VI = vector<int>;",
+            "template<int siz>",
+            "using AI = array<int, siz>;",
             "",
             "void solve() {",
-            "   $0",
+            "    $0",
             "}",
             "",
             "signed main() {",
@@ -42,6 +48,46 @@
             "    return 0;",
             "}",
         ],
-        "description": "头文件"
+        "description": "多测头文件"
+    },
+    "Print to console3": {
+        // "scope": "cpp",
+        "prefix": "datamacker",
+        "body": [
+            "#include <bits/stdc++.h>",
+            "#define rep(i, a, b) for(int i = (a), ed = (b); i <= ed; i++)",
+            "#define per(i, a, b) for(int i = (a), ed = (b); i >= ed; i--)",
+            "using namespace std;",
+            "using LL = long long;",
+            "using VI = vector<int>;",
+            "",
+            "#ifdef _WIN32",
+            "mt19937 rnd(chrono::system_clock::now().time_since_epoch().count());",
+            "#else",
+            "random_device gen;",
+            "mt19937 rnd(gen());",
+            "#endif",
+            "",
+            "int rng(int l, int r) {",
+            "    return uniform_int_distribution<int>(l, r)(rnd);",
+            "}",
+            "",
+            "signed main() {",
+            "    freopen(\"data.in\", \"w\", stdout);",
+            "    ios::sync_with_stdio(0);",
+            "    cin.tie(0); cout.tie(0);",
+            "    $0",
+            "    return 0; ",
+            "}"
+        ],
+        "description": "Data Macker"
+    },
+    "Freopen Input/Output with Dynamic Filename": {
+        "prefix": "fio",
+        "body": [
+            "freopen(\"${1:$TM_SELECTED_TEXT}.in\", \"r\", stdin);",
+            "freopen(\"${1:$TM_SELECTED_TEXT}.out\", \"w\", stdout);",
+        ],
+        "description": "FileIO"
     }
 }
