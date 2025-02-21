@@ -9,50 +9,88 @@ using VI = vector<int>;
 template<int siz>
 using AI = array<int, siz>;
 
-constexpr int N = 2e5 + 5, mod = 998244353;
+constexpr int N = 100000 + 5;
 
-int n;
+int n; 
+string s; 
 
-#define ls (x << 1)
-#define rs (x << 1 | 1)
-struct SGT {
-    struct Node {
-        LL mul = 1, add = 0, sum = 0;
-    }tr[N << 2];
-    
-    void apply(int x, LL len, LL mul, LL add) {
-        (tr[x].sum *= mul) %= mod; (tr[x].mul *= mul) %= mod; (tr[x].add *= mul) %= mod;
-        (tr[x].add += add) %= mod; (tr[x].sum += len * add % mod) %= mod;
+namespace A {
+    constexpr int LG = __lg(N) + 1;
+    int st[N][LG];
+
+    // int query(int l, int r) {
+    //     assert(l <= r);
+    //     int d = __lg(r - l + 1);
+    //     return min(st[l][d], st[r - (1 << d) + 1][d]); 
+    // }
+    void main() {
+        rep(i, 1, n) {
+            if(s[i - 1] == 'R' && s[i] == 'L') 
+                st[i][0] = i - 2;
+            else st[i][0] = i;
+        }
+        rep(j, 1, __lg(n)) rep(i, 1, n) st[i][j] = st[st[i][j - 1]][j - 1];
+        LL ans = 0;
+        rep(i, 1, n) ans += (i - st[i][__lg(n)]) / 2;
+        // cerr << st[2][0] << '\n';
+        cout << ans << '\n';
     }
-    void pushdown(int x, int l, int r) {
-        int mid = l + r >> 1;
-        apply(ls, mid - l + 1, tr[x].mul, tr[x].add);
-        apply(rs, r - mid, tr[x].mul, tr[x].add);
-        tr[x].mul = 1; tr[x].add = 0;
+
+    void check() {
+        if(count(s.begin(), s.end(), 'U') + count(s.begin(), s.end(), 'D') == 0) {
+            main();
+            exit(0);
+        }
     }
-    void pushup(int x) {
-        tr[x].sum = (tr[ls].sum + tr[rs].sum) % mod;
+}
+
+namespace baoli {
+    vector<int> vec[N];
+    int in[N], out[N];
+
+    void main() {
+        LL ans = 0;
+        for(int j = 1; j <= n; j++) for(int i = j; i <= n; i += j) vec[i].emplace_back(j);
+
+        rep(l, 1, n) if(s[l] != 'L' && s[l] != 'U') {
+            rep(r, l + 1, n) if(s[r] != 'R' && s[r] != 'D') {
+                int len = r - l + 1;
+                for(auto h : vec[len]) {
+                    int w = len / h;
+                    rep(i, l, r) in[i] = 0;
+                    rep(i, l, r) {
+                        if(s[i] == 'L') {
+                            if((i - l) / w == (i - l - 1) / w) in[i - 1]++;
+                            else break;
+                        }
+                        else if(s[i] == 'R') {
+                            if((i - l) / w == (i - l + 1) / w) in[i + 1]++;
+                            else break;
+                        }
+                        else if(s[i] == 'U') {
+                            if(i - w >= l) in[i - w]++;
+                            else break;
+                        }
+                        else {
+                            if(i + w <= r) in[i + w]++;
+                            else break;
+                        }
+                    }
+                    int mn = 2;
+                    rep(i, l, r) mn = min(mn, in[i]);
+                    // if(mn != 0) cerr << l << " " << r << '\n';
+                    if(mn != 0) {
+                        ans++;
+                        goto nxt;
+                    }
+                }
+                nxt: ;
+            }
+        }
+        cout << ans << '\n';
     }
-    void modify(int op, int v, int L, int R, int x = 1, int l = 1, int r = n) {
-        // cerr << x << " " << l << " " << r << '\n';
-        if(L <= l && r <= R) return apply(x, r - l + 1, op == 2 ? v : 1, op == 1 ? v : 0);
-        pushdown(x, l, r);
-        int mid = l + r >> 1;
-        if(L <= mid) modify(op, v, L, R, ls, l ,mid);
-        if(mid < R) modify(op, v, L, R, rs, mid + 1, r);
-        pushup(x);
-    }
-    int query(int L, int R, int x = 1, int l = 1, int r = n) {
-        if(L <= l && r <= R) return tr[x].sum;
-        int mid = l + r >> 1, ret  =0;
-        pushdown(x, l, r);
-        if(L <= mid) (ret += query(L, R, ls, l, mid)) %= mod;
-        if(mid < R) (ret += query(L, R, rs, mid + 1, r)) %= mod;
-        return ret;
-    }
-}sgt;
-#undef ls
-#undef rs
+}
+
 
 signed main() {
     freopen("data.in", "r", stdin);
@@ -60,28 +98,11 @@ signed main() {
     ios::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     
-    int q; cin >> n >> q;
-    for(int op, l, r, x; q--; ) {
-        cin >> op >> l >> r;
-        if(op != 4) cin >> x;
-        if(op == 1) sgt.modify(1, x, l, r);
-        else if(op == 2) sgt.modify(2, 0, l, r), sgt.modify(1, x, l, r);
-        else if(op == 3) sgt.modify(2, x, l, r);
-        else cout << sgt.query(l, r) << '\n';
-        // rep(i, 1, n) cout << sgt.query(i, i) << " \n"[i == n];
-    }
+    cin >> s; 
+    n = s.size(); s = " " + s;
+    
+    A::check();
+    baoli::main();
 
     return 0;
 }
-/*
-5 5
-1 2 5 10
-2 3 3 4
-2 2 2 6
-4 2 5
-4 3 4
-
-0 10 10 10 10 
-0 10 4 10 10
-0 6 4 10 10
-*/
