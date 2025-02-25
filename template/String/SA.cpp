@@ -15,9 +15,9 @@ void SA() {
     rep(i, 1, n) buc[rk[i] = s[i]]++;
     rep(i, 1, m) buc[i] += buc[i - 1];
     per(i, n, 1) sa[buc[rk[i]]--] = i;
-    for(int w = 1 ; ; m = p, p = 0, w <<= 1) {
+    for(int w = 1; ; m = p, p = 0, w <<= 1) {
         rep(i, n - w + 1, n) id[++p] = i;
-        rep(i ,1, n) if(sa[i] > w) id[++p] = sa[i] - w;
+        rep(i, 1, n) if(sa[i] > w) id[++p] = sa[i] - w;
         memset(buc, 0, m + 1 << 2);
         memcpy(ork, rk, n + 1 << 2) ;
         p = 0;
