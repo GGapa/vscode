@@ -23,3 +23,27 @@ struct SCC {
         return low[x];
     }
 };
+
+namespace SCC {
+    int low[N], dfn[N], vis[N];
+    vector<int> stk;
+    vector<int> G[N];
+    vector<VI> bel; 
+
+    int dfs(int x) {
+        dfn[x] = low[x] = ++dfn[N - 1]; 
+        stk.emplace_back(x);
+        for(auto to : G[x]) {
+            if(!dfn[to]) low[x] = min(low[x], dfs(to));
+            else if(!vis[to]) low[x] = min(low[x], dfn[to]);
+        }
+        if(dfn[x] == low[x]) {
+            vector<int> tmp;
+            for(int i = -1; i != x; stk.pop_back())
+                tmp.emplace_back(i = stk.back()), vis[i] = 1;
+            bel.emplace_back(tmp);
+        }
+        return low[x];
+    }
+}
+using namespace SCC;
