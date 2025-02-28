@@ -1,3 +1,16 @@
+#include <bits/stdc++.h>
+// #include <bits/extc++.h>
+#define rep(i, a, b) for(int i = (a), stOwrh = (b); i <= stOwrh; i++)
+#define per(i, a, b) for(int i = (a), stOwrh = (b); i >= stOwrh; i--)
+using namespace std;
+// using namespace __gnu_pbds;
+using LL = long long;
+using VI = vector<int>;
+template<int siz>
+using AI = array<int, siz>;
+
+constexpr int N = 2e5 + 5;
+
 namespace MF {
     struct E {
         int v; LL w;
@@ -60,3 +73,33 @@ namespace MF {
     }
 }
 using namespace MF;
+
+signed main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+    
+    int L, R, m; cin >> L >> R >> m;
+    int n = L + R;
+    int S = n + 1, T = n + 2;
+    init(T);
+    rep(i, 1, L) add(S, i, 1);
+    rep(i, 1, R) add(i + L, T, 1);
+    for(int i = 1, u, v; i <= m; i++) {
+        cin >> u >> v;
+        v += L; 
+        u++; v++;
+        add(u, v, 1);
+    }
+    work(S, T);
+    vector<AI<2>> ans;
+    rep(x, 1, L) {
+        for(auto i : G[x]) {
+            auto [to, w] = e[i];
+            if(w == 0 && L + 1 <= to && to <= n) ans.push_back({x, to});
+        }
+    }
+    cout << ans.size() << '\n';
+    for(auto [a, b] : ans) cout << a - 1 << " " << b - L - 1<< '\n';
+
+    return 0;
+}
